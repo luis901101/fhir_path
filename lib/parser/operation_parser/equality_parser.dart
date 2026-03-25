@@ -44,7 +44,6 @@ class EqualsParser extends OperatorParser {
             return [];
           }
         }
-
         /// If they aren't dateTimes we can just compare them as usual
         else {
           if (lhs[i] is ValidatedQuantity || rhs[i] is ValidatedQuantity) {
@@ -76,7 +75,8 @@ class EqualsParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}EqualsParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}EqualsParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -85,7 +85,8 @@ class EqualsParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '='
+  String prettyPrint([int indent = 2]) =>
+      '='
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -110,61 +111,63 @@ class EquivalentParser extends OperatorParser {
     } else if (executedBefore.length != executedAfter.length) {
       return [false];
     } else {
-      executedBefore.removeWhere((lhsElement) =>
-          executedAfter.indexWhere((rhsElement) {
-            if (lhsElement is FhirDateTime ||
-                lhsElement is FhirDate ||
-                rhsElement is FhirDateTime ||
-                rhsElement is FhirDate) {
-              /// As long as one is, we convert them both to strings then back
-              /// to DateTimes
-              final lhsDateTime = FhirDateTime(lhsElement.toString());
-              final rhsDateTime = FhirDateTime(rhsElement.toString());
+      executedBefore.removeWhere(
+        (lhsElement) =>
+            executedAfter.indexWhere((rhsElement) {
+              if (lhsElement is FhirDateTime ||
+                  lhsElement is FhirDate ||
+                  rhsElement is FhirDateTime ||
+                  rhsElement is FhirDate) {
+                /// As long as one is, we convert them both to strings then back
+                /// to DateTimes
+                final lhsDateTime = FhirDateTime(lhsElement.toString());
+                final rhsDateTime = FhirDateTime(rhsElement.toString());
 
-              final equals = lhsDateTime.isEqual(rhsDateTime);
-              if (equals != null) {
-                return equals;
-              } else {
-                return false;
-              }
-            } else if (lhsElement is ValidatedQuantity) {
-              return lhsElement.equivalent(rhsElement);
-            } else if (rhsElement is ValidatedQuantity) {
-              return rhsElement.equivalent(lhsElement);
-            } else if (lhsElement is num || rhsElement is num) {
-              final num? lhsNum = num.tryParse(lhsElement.toString());
-              final num? rhsNum = num.tryParse(rhsElement.toString());
-              final int? sigDigsLhs = lhsNum
-                  ?.toStringAsExponential()
-                  .split('e')
-                  .first
-                  .replaceAll('.', '')
-                  .length;
-              final int? sigDigsRhs = rhsNum
-                  ?.toStringAsExponential()
-                  .split('e')
-                  .first
-                  .replaceAll('.', '')
-                  .length;
-              if (sigDigsLhs == null || sigDigsRhs == null) {
-                return false;
-              } else {
-                if (sigDigsLhs < sigDigsRhs) {
-                  return lhsNum?.toStringAsPrecision(sigDigsLhs) ==
-                      rhsNum?.toStringAsPrecision(sigDigsLhs);
+                final equals = lhsDateTime.isEqual(rhsDateTime);
+                if (equals != null) {
+                  return equals;
                 } else {
-                  return lhsNum?.toStringAsPrecision(sigDigsRhs) ==
-                      rhsNum?.toStringAsPrecision(sigDigsRhs);
+                  return false;
                 }
+              } else if (lhsElement is ValidatedQuantity) {
+                return lhsElement.equivalent(rhsElement);
+              } else if (rhsElement is ValidatedQuantity) {
+                return rhsElement.equivalent(lhsElement);
+              } else if (lhsElement is num || rhsElement is num) {
+                final num? lhsNum = num.tryParse(lhsElement.toString());
+                final num? rhsNum = num.tryParse(rhsElement.toString());
+                final int? sigDigsLhs = lhsNum
+                    ?.toStringAsExponential()
+                    .split('e')
+                    .first
+                    .replaceAll('.', '')
+                    .length;
+                final int? sigDigsRhs = rhsNum
+                    ?.toStringAsExponential()
+                    .split('e')
+                    .first
+                    .replaceAll('.', '')
+                    .length;
+                if (sigDigsLhs == null || sigDigsRhs == null) {
+                  return false;
+                } else {
+                  if (sigDigsLhs < sigDigsRhs) {
+                    return lhsNum?.toStringAsPrecision(sigDigsLhs) ==
+                        rhsNum?.toStringAsPrecision(sigDigsLhs);
+                  } else {
+                    return lhsNum?.toStringAsPrecision(sigDigsRhs) ==
+                        rhsNum?.toStringAsPrecision(sigDigsRhs);
+                  }
+                }
+              } else if (lhsElement is String || rhsElement is String) {
+                return lhsElement.toString().toLowerCase() ==
+                    rhsElement.toString().toLowerCase();
+              } else {
+                return lhsElement == rhsElement || rhsElement == lhsElement;
               }
-            } else if (lhsElement is String || rhsElement is String) {
-              return lhsElement.toString().toLowerCase() ==
-                  rhsElement.toString().toLowerCase();
-            } else {
-              return lhsElement == rhsElement || rhsElement == lhsElement;
-            }
-          }) !=
-          -1);
+            }) !=
+            -1,
+      );
       return [executedBefore.isEmpty];
     }
   }
@@ -177,7 +180,8 @@ class EquivalentParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}EquivalentParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}EquivalentParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -186,7 +190,8 @@ class EquivalentParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '~'
+  String prettyPrint([int indent = 2]) =>
+      '~'
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -216,7 +221,8 @@ class NotEqualsParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}NotEqualsParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}NotEqualsParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -225,7 +231,8 @@ class NotEqualsParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '${"  " * indent}!='
+  String prettyPrint([int indent = 2]) =>
+      '${"  " * indent}!='
       '\n${"  " * indent}${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -252,7 +259,8 @@ class NotEquivalentParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}NotEquivalentParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}NotEquivalentParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -261,7 +269,8 @@ class NotEquivalentParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '${"  " * indent}!~'
+  String prettyPrint([int indent = 2]) =>
+      '${"  " * indent}!~'
       '\n${"  " * indent}${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${"  " * indent}${after.prettyPrint(indent + 1)}';
 }

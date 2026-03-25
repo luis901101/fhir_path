@@ -15,7 +15,8 @@ Parser<FhirPathParser> lexer() {
   /// The order of lexing is important, and if/when updated, needs
   /// to be taken into account in order for petiteparser to find
   /// patterns in the correct order
-  final tokenizer = simpleLexer |
+  final tokenizer =
+      simpleLexer |
       lexerFunctions |
       lexerParentheses |
       wordOperationLexer |
@@ -26,14 +27,19 @@ Parser<FhirPathParser> lexer() {
 
   /// Calls the operatorValues function to check if any arguments need
   /// to be passed to the current Parser
-  lexerFunctions.set((functionLexer & tokenizer.star() & char(')')).map((val) {
-    return val[0].copyWith(operatorValues(val[1] as List));
-  }));
+  lexerFunctions.set(
+    (functionLexer & tokenizer.star() & char(')')).map((val) {
+      return val[0].copyWith(operatorValues(val[1] as List));
+    }),
+  );
 
   /// Calls the operatorValues function to check if any arguments need
   /// to be passed to the current ParenthesesParser
-  lexerParentheses.set((char('(') & tokenizer.star() & char(')'))
-      .map((value) => ParenthesesParser(operatorValues(value[1] as List))));
+  lexerParentheses.set(
+    (char('(') & tokenizer.star() & char(')')).map(
+      (value) => ParenthesesParser(operatorValues(value[1] as List)),
+    ),
+  );
 
   /// Complete the lexing and again, passes to operatorValues
   return tokenizer.plus().end().map((value) => operatorValues(value));
@@ -55,16 +61,15 @@ ParserList operatorValues(List fullList) {
     return ParserList(fullList.map((e) => e as FhirPathParser).toList());
   } else {
     // Replace +/- with unary representation based on simple rules
-    fullList.forEachIndexed(
-      (i, entry) {
-        if (entry is MinusParser || entry is PlusParser) {
-          if (i == 0 || fullList[i - 1] is OperatorParser) {
-            fullList[i] =
-                entry is MinusParser ? UnaryNegateParser() : UnaryPlusParser();
-          }
+    fullList.forEachIndexed((i, entry) {
+      if (entry is MinusParser || entry is PlusParser) {
+        if (i == 0 || fullList[i - 1] is OperatorParser) {
+          fullList[i] = entry is MinusParser
+              ? UnaryNegateParser()
+              : UnaryPlusParser();
         }
-      },
-    );
+      }
+    });
 
     int highest = -1;
     for (final entry in fullList) {
@@ -74,13 +79,16 @@ ParserList operatorValues(List fullList) {
       }
     }
 
-    final splitIndex = fullList
-        .lastIndexWhere((e) => operatorOrderMap[e.runtimeType] == highest);
+    final splitIndex = fullList.lastIndexWhere(
+      (e) => operatorOrderMap[e.runtimeType] == highest,
+    );
 
-    fullList[splitIndex].before =
-        operatorValues(fullList.sublist(0, splitIndex));
-    fullList[splitIndex].after =
-        operatorValues(fullList.sublist(splitIndex + 1, fullList.length));
+    fullList[splitIndex].before = operatorValues(
+      fullList.sublist(0, splitIndex),
+    );
+    fullList[splitIndex].after = operatorValues(
+      fullList.sublist(splitIndex + 1, fullList.length),
+    );
     return ParserList(<FhirPathParser>[fullList[splitIndex] as FhirPathParser]);
   }
 }

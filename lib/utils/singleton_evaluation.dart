@@ -26,10 +26,11 @@ class SingletonEvaluation {
 
     if (input.length > 1) {
       throw FhirPathEvaluationException(
-          'The $name is required to be '
-          'either an empty value, or a single value. Instead it evaluated to: $input.',
-          operation: operation,
-          collection: collection);
+        'The $name is required to be '
+        'either an empty value, or a single value. Instead it evaluated to: $input.',
+        operation: operation,
+        collection: collection,
+      );
     }
 
     final item = input.first;
@@ -37,9 +38,11 @@ class SingletonEvaluation {
       if (item['value'] != null && item['unit'] != null) {
         return [
           ValidatedQuantity(
-              value: UcumDecimal.fromString(
-                  ((item['value']).value ?? double.nan).toString()),
-              unit: item['unit'] as String)
+            value: UcumDecimal.fromString(
+              ((item['value']).value ?? double.nan).toString(),
+            ),
+            unit: item['unit'] as String,
+          ),
         ];
       }
     }
@@ -62,10 +65,11 @@ class SingletonEvaluation {
 
     if (input.length > 1) {
       throw FhirPathEvaluationException(
-          'The $name is required to be '
-          'either an empty value, or a single value. Instead it evaluated to: $input.',
-          operation: operation,
-          collection: collection);
+        'The $name is required to be '
+        'either an empty value, or a single value. Instead it evaluated to: $input.',
+        operation: operation,
+        collection: collection,
+      );
     }
 
     if (input.first is bool) {
@@ -74,8 +78,14 @@ class SingletonEvaluation {
 
     if (input.first == 0 ||
         (input.first is String &&
-            ['false', 'f', 'no', 'n', '0', '0.0']
-                .contains(input.first.toString().toLowerCase()))) {
+            [
+              'false',
+              'f',
+              'no',
+              'n',
+              '0',
+              '0.0',
+            ].contains(input.first.toString().toLowerCase()))) {
       return false;
     }
 

@@ -96,8 +96,9 @@ class EnvVariableParser extends ValueParser<String> {
     final passedValue = passed[variableName];
     if (passedValue == null) {
       throw FhirPathEvaluationException(
-          'Variable $variableName does not exist.',
-          variables: passed);
+        'Variable $variableName does not exist.',
+        variables: passed,
+      );
     }
 
     if (passedValue is! Function()) {
@@ -109,8 +110,9 @@ class EnvVariableParser extends ValueParser<String> {
         return result is List ? result : [result];
       } catch (ex) {
         throw FhirPathEvaluationException(
-            'Variable $value could not be lazily evaluated.',
-            cause: ex);
+          'Variable $value could not be lazily evaluated.',
+          cause: ex,
+        );
       }
     }
   }
@@ -154,15 +156,14 @@ class QuantityParser extends ValueParser<ValidatedQuantity> {
     return other is QuantityParser
         ? value == other.value
         : other is ValidatedQuantity
-            ? value == other
-            : other is UcumDecimal
-                ? value.value == other
-                : other is String
-                    ? value == ValidatedQuantity.fromString(other)
-                    : other is num
-                        ? value ==
-                            ValidatedQuantity.fromString(other.toString())
-                        : false;
+        ? value == other
+        : other is UcumDecimal
+        ? value.value == other
+        : other is String
+        ? value == ValidatedQuantity.fromString(other)
+        : other is num
+        ? value == ValidatedQuantity.fromString(other.toString())
+        : false;
   }
 }
 
@@ -242,8 +243,11 @@ class IdentifierParser extends ValueParser<String> {
     final identifierName = value;
 
     final finalResults = [];
-    final finalPrimitiveExtensions =
-        List<dynamic>.filled(results.length, null, growable: false);
+    final finalPrimitiveExtensions = List<dynamic>.filled(
+      results.length,
+      null,
+      growable: false,
+    );
 
     final passedExtensions = passed[ExtensionParser.extensionKey];
     passed[ExtensionParser.extensionKey] = null;
@@ -342,8 +346,11 @@ class DelimitedIdentifierParser extends ValueParser<String> {
     final identifierName = value;
 
     final finalResults = [];
-    final finalPrimitiveExtensions =
-        List<dynamic>.filled(results.length, null, growable: false);
+    final finalPrimitiveExtensions = List<dynamic>.filled(
+      results.length,
+      null,
+      growable: false,
+    );
 
     final passedExtensions = passed[ExtensionParser.extensionKey];
     passed[ExtensionParser.extensionKey] = null;
@@ -351,9 +358,9 @@ class DelimitedIdentifierParser extends ValueParser<String> {
     if (passed.isVersion(FhirVersion.r4)
         ? r4.resourceTypeFromStringMap.keys.contains(identifierName)
         : r5.resourceTypeFromStringMap.keys.contains(identifierName) &&
-                    (passed.hasNoContext
-                        ? false
-                        : passed.context?['resourceType'] == identifierName)) {
+              (passed.hasNoContext
+                  ? false
+                  : passed.context?['resourceType'] == identifierName)) {
       finalResults.add(passed.context);
     } else {
       results.forEachIndexed((i, r) {

@@ -13,25 +13,27 @@ import '../fhir_path.dart';
 /// identifies bracketsIndexs
 final Parser<BracketsIndexParser> bracketsIndexLexer =
     (char('[') & digit().plus() & char(']')).map((value) {
-  return BracketsIndexParser(int.parse(value[1].join('')));
-});
+      return BracketsIndexParser(int.parse(value[1].join('')));
+    });
 
 /// identifies indexs
-final Parser<IndexParser> indexLexer =
-    string(r'$index').map((_) => IndexParser());
+final Parser<IndexParser> indexLexer = string(
+  r'$index',
+).map((_) => IndexParser());
 
 /// identifies thiss
 final Parser<ThisParser> thisLexer = string(r'$this').map((_) => ThisParser());
 
 /// identifies totals
-final Parser<TotalParser> totalLexer =
-    string(r'$total').map((_) => TotalParser());
+final Parser<TotalParser> totalLexer = string(
+  r'$total',
+).map((_) => TotalParser());
 
 /// identifies emptySets
 final Parser<EmptySetParser> emptySetLexer =
-    (char('{') & whitespace().optional() & char('}'))
-        .flatten()
-        .map((_) => EmptySetParser());
+    (char('{') & whitespace().optional() & char('}')).flatten().map(
+      (_) => EmptySetParser(),
+    );
 
 /// identifies dots
 final Parser<DotParser> dotLexer = char('.').flatten().map((_) => DotParser());

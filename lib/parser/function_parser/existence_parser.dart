@@ -59,8 +59,10 @@ class HasValueParser extends FhirPathParser {
     if (element is Map<String, dynamic>) {
       // element is a Map, most likely an answer. Introspect further...
       return [
-        element.entries.any((mapEntry) =>
-            mapEntry.key.startsWith('value') && mapEntry.value != null)
+        element.entries.any(
+          (mapEntry) =>
+              mapEntry.key.startsWith('value') && mapEntry.value != null,
+        ),
       ];
     } else {
       // element is a Dart primitive
@@ -107,8 +109,9 @@ class ExistsParser extends FunctionParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) {
-    final returnList =
-        IterationContext.withIterationContext((iterationContext) {
+    final returnList = IterationContext.withIterationContext((
+      iterationContext,
+    ) {
       final iterationResult = [];
       results.forEachIndexed((i, element) {
         iterationContext.indexValue = i;
@@ -167,8 +170,11 @@ class AllParser extends FunctionParser {
         iterationContext.thisValue = r;
         iterationContext.indexValue = i;
         final executedValue = value.execute([r], passed);
-        if (SingletonEvaluation.toBool(executedValue,
-                name: 'expression in all()', operation: 'all') !=
+        if (SingletonEvaluation.toBool(
+              executedValue,
+              name: 'expression in all()',
+              operation: 'all',
+            ) !=
             true) {
           allResult = false;
           return;

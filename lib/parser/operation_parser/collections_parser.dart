@@ -30,7 +30,8 @@ class UnionOperatorParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}UnionOperatorParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}UnionOperatorParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -39,7 +40,8 @@ class UnionOperatorParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => 'unionOperator('
+  String prettyPrint([int indent = 2]) =>
+      'unionOperator('
       '\n${before.prettyPrint(indent + 1)}'
       '\n${after.prettyPrint(indent + 1)}\n'
       '${indent <= 0 ? "" : "  " * (indent - 1)})';
@@ -68,17 +70,20 @@ class ContainsOperatorParser extends OperatorParser {
 
     if (rightOperand.length > 1) {
       throw FhirPathEvaluationException(
-          "The 'contains' operator is expecting a single item on its right side. Found $rightOperand",
-          operation: 'contains',
-          collection: results);
+        "The 'contains' operator is expecting a single item on its right side. Found $rightOperand",
+        operation: 'contains',
+        collection: results,
+      );
     }
 
     final rightItem = rightOperand.first.toString();
 
     return [
-      leftOperand.firstWhere((leftItem) => leftItem.toString() == rightItem,
-              orElse: () => null) !=
-          null
+      leftOperand.firstWhere(
+            (leftItem) => leftItem.toString() == rightItem,
+            orElse: () => null,
+          ) !=
+          null,
     ];
   }
 
@@ -90,7 +95,8 @@ class ContainsOperatorParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}ContainsOperatorParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}ContainsOperatorParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -99,7 +105,8 @@ class ContainsOperatorParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => 'containsOperator('
+  String prettyPrint([int indent = 2]) =>
+      'containsOperator('
       '\n${before.prettyPrint(indent + 1)}'
       '\n${after.prettyPrint(indent + 1)}\n'
       '${indent <= 0 ? "" : "  " * (indent - 1)})';
@@ -124,16 +131,19 @@ class InParser extends OperatorParser {
 
     if (executedBefore.length > 1) {
       throw FhirPathEvaluationException(
-          "The 'in' operator is expecting a single item on its left side. Found $executedBefore",
-          operation: 'in',
-          collection: results);
+        "The 'in' operator is expecting a single item on its left side. Found $executedBefore",
+        operation: 'in',
+        collection: results,
+      );
     }
 
     final leftItem = executedBefore.first.toString();
     return [
-      executedAfter.firstWhere((rightItem) => rightItem.toString() == leftItem,
-              orElse: () => null) !=
-          null
+      executedAfter.firstWhere(
+            (rightItem) => rightItem.toString() == leftItem,
+            orElse: () => null,
+          ) !=
+          null,
     ];
   }
 
@@ -145,7 +155,8 @@ class InParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}InParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}InParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -154,7 +165,8 @@ class InParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => 'in('
+  String prettyPrint([int indent = 2]) =>
+      'in('
       '\n${before.prettyPrint(indent + 1)}'
       '\n${after.prettyPrint(indent + 1)}\n'
       '${indent <= 0 ? "" : "  " * (indent - 1)})';
@@ -203,7 +215,8 @@ class CommaParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}CommaParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}CommaParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -212,7 +225,8 @@ class CommaParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => ','
+  String prettyPrint([int indent = 2]) =>
+      ','
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }

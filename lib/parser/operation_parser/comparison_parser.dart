@@ -26,7 +26,8 @@ class GreaterParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}GreaterParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}GreaterParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -35,7 +36,8 @@ class GreaterParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '>'
+  String prettyPrint([int indent = 2]) =>
+      '>'
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -59,7 +61,8 @@ class LessParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}LessParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}LessParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -68,7 +71,8 @@ class LessParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '<'
+  String prettyPrint([int indent = 2]) =>
+      '<'
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -93,7 +97,8 @@ class GreaterEqualParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}GreaterEqualParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}GreaterEqualParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -102,7 +107,8 @@ class GreaterEqualParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '>='
+  String prettyPrint([int indent = 2]) =>
+      '>='
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -126,7 +132,8 @@ class LessEqualParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}LessEqualParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}LessEqualParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -135,7 +142,8 @@ class LessEqualParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '<='
+  String prettyPrint([int indent = 2]) =>
+      '<='
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }
@@ -144,9 +152,14 @@ enum Comparator { gt, gte, lt, lte }
 
 // TODO(Dokotela): review if appropriately comparing different types
 @override
-List executeComparisons(List results, ParserList before, ParserList after,
-    Map<String, dynamic> passed, Comparator comparator,
-    {bool where = false}) {
+List executeComparisons(
+  List results,
+  ParserList before,
+  ParserList after,
+  Map<String, dynamic> passed,
+  Comparator comparator, {
+  bool where = false,
+}) {
   // TODO(Dokotela): Currently, this is going to assume that if a String is being compared
   // with a Date, DateTime, or Time, and the String is a valid format of a Time
   // or DateTime, then they should still be compared
@@ -197,16 +210,18 @@ List executeComparisons(List results, ParserList before, ParserList after,
 
   Exception cannotCompareException(dynamic param1, dynamic param2) =>
       FhirPathEvaluationException(
-          'The comparator $comparator was not passed types that can be '
-          'compared.\n'
-          'Param1: $param1 - ${param1.runtimeType}\n'
-          'Param1: $param2 - ${param2.runtimeType}\n');
+        'The comparator $comparator was not passed types that can be '
+        'compared.\n'
+        'Param1: $param1 - ${param1.runtimeType}\n'
+        'Param1: $param2 - ${param2.runtimeType}\n',
+      );
 
   Exception invalidException(dynamic param1, dynamic param2) =>
       FhirPathEvaluationException(
-          'The comparator $comparator was not passed two valid types.\n'
-          'Param1: $param1 - ${param1.runtimeType} - Valid? ${param1.isValid}\n'
-          'Param1: $param2 - ${param2.runtimeType} - Valid? ${param2.isValid}\n');
+        'The comparator $comparator was not passed two valid types.\n'
+        'Param1: $param1 - ${param1.runtimeType} - Valid? ${param1.isValid}\n'
+        'Param1: $param2 - ${param2.runtimeType} - Valid? ${param2.isValid}\n',
+      );
 
   bool? compare(Comparator comparator, dynamic lhs, dynamic rhs) {
     switch (lhs.runtimeType) {
@@ -214,67 +229,64 @@ List executeComparisons(List results, ParserList before, ParserList after,
         return rhs is num
             ? makeComparison(comparator, lhs, rhs)
             : rhs is FhirNumber && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs.valueNumber)
-                : rhs is String && num.tryParse(rhs) != null
-                    ? makeComparison(comparator, lhs, num.parse(rhs))
-                    : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, rhs.valueNumber)
+            : rhs is String && num.tryParse(rhs) != null
+            ? makeComparison(comparator, lhs, num.parse(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case int:
         return rhs is num
             ? makeComparison(comparator, lhs, rhs)
             : rhs is FhirNumber && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs.valueNumber)
-                : rhs is String && num.tryParse(rhs) != null
-                    ? makeComparison(comparator, lhs, num.parse(rhs))
-                    : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, rhs.valueNumber)
+            : rhs is String && num.tryParse(rhs) != null
+            ? makeComparison(comparator, lhs, num.parse(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case double:
         return rhs is num
             ? makeComparison(comparator, lhs, rhs)
             : rhs is FhirNumber && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs.valueNumber)
-                : rhs is String && num.tryParse(rhs) != null
-                    ? makeComparison(comparator, lhs, num.parse(rhs))
-                    : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, rhs.valueNumber)
+            : rhs is String && num.tryParse(rhs) != null
+            ? makeComparison(comparator, lhs, num.parse(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case FhirDate:
         return rhs is FhirDateTimeBase
             ? (lhs as FhirDate).isValid && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs)
-                : throw invalidException(lhs, rhs)
+                  ? makeComparison(comparator, lhs, rhs)
+                  : throw invalidException(lhs, rhs)
             : rhs is String && FhirDateTime(rhs).isValid
-                ? makeComparison(comparator, lhs, rhs)
-                : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, rhs)
+            : throw cannotCompareException(lhs, rhs);
       case DateTime:
         return (rhs is FhirDateTimeBase && rhs.isValid)
             ? makeComparison(comparator, FhirDateTime(lhs), rhs)
             : rhs is DateTime
-                ? makeComparison(
-                    comparator, FhirDateTime(lhs), FhirDateTime(rhs))
-                : rhs is String && FhirDateTime(rhs).isValid
-                    ? makeComparison(
-                        comparator, FhirDateTime(lhs), FhirDateTime(rhs))
-                    : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, FhirDateTime(lhs), FhirDateTime(rhs))
+            : rhs is String && FhirDateTime(rhs).isValid
+            ? makeComparison(comparator, FhirDateTime(lhs), FhirDateTime(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case FhirDateTime:
         return rhs is FhirDateTimeBase
             ? (lhs as FhirDateTime).isValid && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs)
-                : throw invalidException(lhs, rhs)
+                  ? makeComparison(comparator, lhs, rhs)
+                  : throw invalidException(lhs, rhs)
             : rhs is String && FhirDateTime(rhs).isValid
-                ? makeComparison(comparator, lhs, FhirDateTime(rhs))
-                : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, FhirDateTime(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case FhirTime:
         return rhs is FhirTime
             ? (lhs as FhirTime).isValid && rhs.isValid
-                ? makeComparison(comparator, lhs, rhs)
-                : throw invalidException(lhs, rhs)
+                  ? makeComparison(comparator, lhs, rhs)
+                  : throw invalidException(lhs, rhs)
             : rhs is String && FhirTime(rhs).isValid
-                ? makeComparison(comparator, lhs, FhirTime(rhs))
-                : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, FhirTime(rhs))
+            : throw cannotCompareException(lhs, rhs);
       case ValidatedQuantity:
         return rhs is ValidatedQuantity
             ? makeComparison(comparator, lhs, rhs)
             : rhs is String
-                ? makeComparison(
-                    comparator, lhs, ValidatedQuantity.fromString(rhs))
-                : throw cannotCompareException(lhs, rhs);
+            ? makeComparison(comparator, lhs, ValidatedQuantity.fromString(rhs))
+            : throw cannotCompareException(lhs, rhs);
 
       /// Default should be when lhs is a String
       default:
@@ -282,15 +294,15 @@ List executeComparisons(List results, ParserList before, ParserList after,
           if (lhs is String && rhs is String) {
             return (comparator == Comparator.gt || comparator == Comparator.lt)
                 ? lhs == rhs
-                    ? false
-                    : comparator == Comparator.gt
-                        ? stringGt(lhs, rhs)
-                        : !stringGt(lhs, rhs)
+                      ? false
+                      : comparator == Comparator.gt
+                      ? stringGt(lhs, rhs)
+                      : !stringGt(lhs, rhs)
                 : lhs == rhs
-                    ? true
-                    : comparator == Comparator.gte
-                        ? stringGt(lhs, rhs)
-                        : !stringGt(lhs, rhs);
+                ? true
+                : comparator == Comparator.gte
+                ? stringGt(lhs, rhs)
+                : !stringGt(lhs, rhs);
           } else if (rhs is FhirTime && FhirTime(lhs).isValid) {
             return makeComparison(comparator, FhirTime(lhs), rhs);
           } else if ((rhs is FhirDate || rhs is FhirDateTime)) {
@@ -312,23 +324,25 @@ List executeComparisons(List results, ParserList before, ParserList after,
   }
 
   final lhs = SingletonEvaluation.toSingleton(
-      before.execute(results.toList(), passed),
-      name: 'left-hand side',
-      operation: comparator.toString(),
-      collection: results);
+    before.execute(results.toList(), passed),
+    name: 'left-hand side',
+    operation: comparator.toString(),
+    collection: results,
+  );
   final rhs = SingletonEvaluation.toSingleton(
-      after.execute(results.toList(), passed),
-      name: 'right-hand side',
-      operation: comparator.toString(),
-      collection: results);
+    after.execute(results.toList(), passed),
+    name: 'right-hand side',
+    operation: comparator.toString(),
+    collection: results,
+  );
 
   if (lhs.isEmpty || rhs.isEmpty) {
     return [];
   } else if (lhs.length != 1 || rhs.length != 1) {
-    throw _wrongArgLength(
-      comparator.toString(),
-      ['Left-hand side: $lhs', 'Right-hand side: $rhs'],
-    );
+    throw _wrongArgLength(comparator.toString(), [
+      'Left-hand side: $lhs',
+      'Right-hand side: $rhs',
+    ]);
   }
   {
     if (!_allowedTypes.contains(lhs.first.runtimeType) ||
@@ -336,20 +350,23 @@ List executeComparisons(List results, ParserList before, ParserList after,
       final functionName = comparator == Comparator.gt
           ? '>'
           : comparator == Comparator.gte
-              ? '>='
-              : comparator == Comparator.lt
-                  ? '<'
-                  : '<=';
+          ? '>='
+          : comparator == Comparator.lt
+          ? '<'
+          : '<=';
       throw FhirPathEvaluationException(
-          'The comparator $functionName cannot work with the types '
-          'passed.\n'
-          'LHS: $lhs\n'
-          'RHS: $rhs',
-          operation: functionName,
-          arguments: [before, after]);
+        'The comparator $functionName cannot work with the types '
+        'passed.\n'
+        'LHS: $lhs\n'
+        'RHS: $rhs',
+        operation: functionName,
+        arguments: [before, after],
+      );
     } else if (where) {
-      results.retainWhere((element) =>
-          compare(comparator, element[lhs.first], rhs.first) ?? false);
+      results.retainWhere(
+        (element) =>
+            compare(comparator, element[lhs.first], rhs.first) ?? false,
+      );
       return results;
     } else {
       final newResult = compare(comparator, lhs.first, rhs.first);
@@ -371,7 +388,8 @@ const _allowedTypes = [
 
 Exception _wrongArgLength(String functionName, List value) =>
     FhirPathEvaluationException(
-        'The function $functionName must have an argument that '
-        'evaluates to 0 or 1 item.',
-        operation: functionName,
-        arguments: value);
+      'The function $functionName must have an argument that '
+      'evaluates to 0 or 1 item.',
+      operation: functionName,
+      arguments: value,
+    );

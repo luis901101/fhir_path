@@ -52,8 +52,9 @@ class IndexParser extends FhirPathParser {
   /// The iterable, nested function that evaluates the entire FHIRPath
   /// expression one object at a time
   @override
-  List execute(List results, Map<String, dynamic> passed) =>
-      [IterationContext.current(passed).indexValue];
+  List execute(List results, Map<String, dynamic> passed) => [
+    IterationContext.current(passed).indexValue,
+  ];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -82,8 +83,9 @@ class IterationContext {
   static const _iterationKey = r'$iteration';
 
   static List<dynamic> withIterationContext(
-      List<dynamic> Function(IterationContext) iteratedFunction,
-      Map<String, dynamic> passed) {
+    List<dynamic> Function(IterationContext) iteratedFunction,
+    Map<String, dynamic> passed,
+  ) {
     final topIterationContext = passed[_iterationKey];
     final thisIterationContext = IterationContext();
     passed[_iterationKey] = thisIterationContext;
@@ -99,7 +101,8 @@ class IterationContext {
     final topRepeatContext = passed[_iterationKey];
     if (topRepeatContext == null) {
       throw FhirPathEvaluationException(
-          r'No context for $this, $total, or $index is available.');
+        r'No context for $this, $total, or $index is available.',
+      );
     }
 
     return topRepeatContext as IterationContext;
@@ -192,16 +195,18 @@ class AggregateParser extends FunctionParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) {
-    final finalTotal =
-        IterationContext.withIterationContext((iterationContext) {
+    final finalTotal = IterationContext.withIterationContext((
+      iterationContext,
+    ) {
       List<dynamic> currentTotal = [];
 
       late FhirPathParser expression;
       late dynamic initialValue;
       if (value.value.first is CommaParser) {
-        initialValue = (value.value.first as CommaParser)
-            .after
-            .execute(results.toList(), passed);
+        initialValue = (value.value.first as CommaParser).after.execute(
+          results.toList(),
+          passed,
+        );
         expression = (value.value.first as CommaParser).before;
       } else {
         initialValue = [];

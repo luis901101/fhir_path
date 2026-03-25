@@ -10,23 +10,27 @@ import '../fhir_path.dart';
 
 /// identifies toBooleans
 final Parser<ToBooleanParser> toBooleanLexer =
-    (string('toBoolean()') | string('.toBoolean()'))
-        .map((_) => ToBooleanParser());
+    (string('toBoolean()') | string('.toBoolean()')).map(
+      (_) => ToBooleanParser(),
+    );
 
 /// identifies convertsToBooleans
 final Parser<ConvertsToBooleanParser> convertsToBooleanLexer =
-    (string('convertsToBoolean()') | string('.convertsToBoolean()'))
-        .map((_) => ConvertsToBooleanParser());
+    (string('convertsToBoolean()') | string('.convertsToBoolean()')).map(
+      (_) => ConvertsToBooleanParser(),
+    );
 
 /// identifies toIntegers
 final Parser<ToIntegerParser> toIntegerLexer =
-    (string('toInteger()') | string('.toInteger()'))
-        .map((_) => ToIntegerParser());
+    (string('toInteger()') | string('.toInteger()')).map(
+      (_) => ToIntegerParser(),
+    );
 
 /// identifies convertsToIntegers
 final Parser<ConvertsToIntegerParser> convertsToIntegerLexer =
-    (string('convertsToInteger()') | string('.convertsToInteger()'))
-        .map((_) => ConvertsToIntegerParser());
+    (string('convertsToInteger()') | string('.convertsToInteger()')).map(
+      (_) => ConvertsToIntegerParser(),
+    );
 
 /// identifies toDates
 final Parser<ToDateParser> toDateLexer =
@@ -34,28 +38,33 @@ final Parser<ToDateParser> toDateLexer =
 
 /// identifies convertsToDates
 final Parser<ConvertsToDateParser> convertsToDateLexer =
-    (string('convertsToDate()') | string('.convertsToDate()'))
-        .map((_) => ConvertsToDateParser());
+    (string('convertsToDate()') | string('.convertsToDate()')).map(
+      (_) => ConvertsToDateParser(),
+    );
 
 /// identifies toDateTimes
 final Parser<ToDateTimeParser> toDateTimeLexer =
-    (string('toDateTime()') | string('.toDateTime()'))
-        .map((_) => ToDateTimeParser());
+    (string('toDateTime()') | string('.toDateTime()')).map(
+      (_) => ToDateTimeParser(),
+    );
 
 /// identifies convertsToDateTimes
 final Parser<ConvertsToDateTimeParser> convertsToDateTimeLexer =
-    (string('convertsToDateTime()') | string('.convertsToDateTime()'))
-        .map((_) => ConvertsToDateTimeParser());
+    (string('convertsToDateTime()') | string('.convertsToDateTime()')).map(
+      (_) => ConvertsToDateTimeParser(),
+    );
 
 /// identifies toDecimals
 final Parser<ToDecimalParser> toDecimalLexer =
-    (string('toDecimal()') | string('.toDecimal()'))
-        .map((_) => ToDecimalParser());
+    (string('toDecimal()') | string('.toDecimal()')).map(
+      (_) => ToDecimalParser(),
+    );
 
 /// identifies convertsToDecimals
 final Parser<ConvertsToDecimalParser> convertsToDecimalLexer =
-    (string('convertsToDecimal()') | string('.convertsToDecimal()'))
-        .map((_) => ConvertsToDecimalParser());
+    (string('convertsToDecimal()') | string('.convertsToDecimal()')).map(
+      (_) => ConvertsToDecimalParser(),
+    );
 
 /// identifies toStrings
 final Parser<ToStringParser> toStringLexer =
@@ -63,8 +72,9 @@ final Parser<ToStringParser> toStringLexer =
 
 /// identifies convertsToStrings
 final Parser<ConvertsToStringParser> convertsToStringLexer =
-    (string('convertsToString()') | string('.convertsToString()'))
-        .map((_) => ConvertsToStringParser());
+    (string('convertsToString()') | string('.convertsToString()')).map(
+      (_) => ConvertsToStringParser(),
+    );
 
 /// identifies toTimes
 final Parser<ToTimeParser> toTimeLexer =
@@ -72,16 +82,17 @@ final Parser<ToTimeParser> toTimeLexer =
 
 /// identifies convertsToTimes
 final Parser<ConvertsToTimeParser> convertsToTimeLexer =
-    (string('convertsToTime()') | string('.convertsToTime()'))
-        .map((_) => ConvertsToTimeParser());
+    (string('convertsToTime()') | string('.convertsToTime()')).map(
+      (_) => ConvertsToTimeParser(),
+    );
 
 /// identifies hasValues
 final Parser<HasValueParser> hasValueLexer =
     (string('hasValue()') | string('.hasValue()')).map((_) => HasValueParser());
 
 /// identifies emptys
-final Parser<EmptyParser> emptyLexer =
-    (string('empty()') | string('.empty()')).map((_) => EmptyParser());
+final Parser<EmptyParser> emptyLexer = (string('empty()') | string('.empty()'))
+    .map((_) => EmptyParser());
 
 /// identifies allTrues
 final Parser<AllTrueParser> allTrueLexer =
@@ -100,8 +111,8 @@ final Parser<AnyFalseParser> anyFalseLexer =
     (string('anyFalse()') | string('.anyFalse()')).map((_) => AnyFalseParser());
 
 /// identifies counts
-final Parser<CountParser> countLexer =
-    (string('count()') | string('.count()')).map((_) => CountParser());
+final Parser<CountParser> countLexer = (string('count()') | string('.count()'))
+    .map((_) => CountParser());
 
 /// identifies distincts
 final Parser<DistinctParser> distinctLexer =
@@ -109,45 +120,51 @@ final Parser<DistinctParser> distinctLexer =
 
 /// identifies isDistincts
 final Parser<IsDistinctParser> isDistinctLexer =
-    (string('isDistinct()') | string('.isDistinct()'))
-        .map((_) => IsDistinctParser());
+    (string('isDistinct()') | string('.isDistinct()')).map(
+      (_) => IsDistinctParser(),
+    );
 
 /// identifies abss
-final Parser<AbsParser> absLexer =
-    (string('abs()') | string('.abs()')).map((_) => AbsParser());
+final Parser<AbsParser> absLexer = (string('abs()') | string('.abs()')).map(
+  (_) => AbsParser(),
+);
 
 /// identifies ceilings
 final Parser<CeilingParser> ceilingLexer =
     (string('ceiling()') | string('.ceiling()')).map((_) => CeilingParser());
 
 /// identifies exps
-final Parser<ExpParser> expLexer =
-    (string('exp()') | string('.exp()')).map((_) => ExpParser());
+final Parser<ExpParser> expLexer = (string('exp()') | string('.exp()')).map(
+  (_) => ExpParser(),
+);
 
 /// identifies floors
-final Parser<FloorParser> floorLexer =
-    (string('floor()') | string('.floor()')).map((_) => FloorParser());
+final Parser<FloorParser> floorLexer = (string('floor()') | string('.floor()'))
+    .map((_) => FloorParser());
 
 /// identifies lns
-final Parser<LnParser> lnLexer =
-    (string('ln()') | string('.ln()')).map((_) => LnParser());
+final Parser<LnParser> lnLexer = (string('ln()') | string('.ln()')).map(
+  (_) => LnParser(),
+);
 
 /// identifies sqrts
-final Parser<SqrtParser> sqrtLexer =
-    (string('sqrt()') | string('.sqrt()')).map((_) => SqrtParser());
+final Parser<SqrtParser> sqrtLexer = (string('sqrt()') | string('.sqrt()')).map(
+  (_) => SqrtParser(),
+);
 
 /// identifies truncates
 final Parser<TruncateParser> truncateLexer =
-    (string('truncate()') | string('.truncate()'))
-        .map((_) => TruncateParser.empty());
+    (string('truncate()') | string('.truncate()')).map(
+      (_) => TruncateParser.empty(),
+    );
 
 /// identifies uppers
-final Parser<UpperParser> upperLexer =
-    (string('upper()') | string('.upper()')).map((_) => UpperParser());
+final Parser<UpperParser> upperLexer = (string('upper()') | string('.upper()'))
+    .map((_) => UpperParser());
 
 /// identifies lowers
-final Parser<LowerParser> lowerLexer =
-    (string('lower()') | string('.lower()')).map((_) => LowerParser());
+final Parser<LowerParser> lowerLexer = (string('lower()') | string('.lower()'))
+    .map((_) => LowerParser());
 
 /// identifies lengths
 final Parser<LengthParser> lengthLexer =
@@ -162,17 +179,19 @@ final Parser<SingleParser> singleLexer =
     (string('single()') | string('.single()')).map((_) => SingleParser());
 
 /// identifies firsts
-final Parser<FirstParser> firstLexer =
-    (string('first()') | string('.first()')).map((_) => FirstParser());
+final Parser<FirstParser> firstLexer = (string('first()') | string('.first()'))
+    .map((_) => FirstParser());
 
 /// identifies lasts
 final Parser<LastParser> lastLexer =
-    (string('laexecutedAfter.firstst()') | string('.last()'))
-        .map((_) => LastParser());
+    (string('laexecutedAfter.firstst()') | string('.last()')).map(
+      (_) => LastParser(),
+    );
 
 /// identifies tails
-final Parser<TailParser> tailLexer =
-    (string('tail()') | string('.tail()')).map((_) => TailParser());
+final Parser<TailParser> tailLexer = (string('tail()') | string('.tail()')).map(
+  (_) => TailParser(),
+);
 
 /// identifies childrens
 final Parser<ChildrenParser> childrenLexer =
@@ -180,22 +199,26 @@ final Parser<ChildrenParser> childrenLexer =
 
 /// identifies descendantss
 final Parser<DescendantsParser> descendantsLexer =
-    (string('descendants()') | string('.descendants()'))
-        .map((_) => DescendantsParser());
+    (string('descendants()') | string('.descendants()')).map(
+      (_) => DescendantsParser(),
+    );
 
 /// identifies nots
-final Parser<FpNotParser> notLexer =
-    (string('not()') | string('.not()')).map((_) => FpNotParser());
+final Parser<FpNotParser> notLexer = (string('not()') | string('.not()')).map(
+  (_) => FpNotParser(),
+);
 
 /// identifies nows
-final Parser<NowParser> nowLexer =
-    (string('now()') | string('.now()')).map((_) => NowParser());
+final Parser<NowParser> nowLexer = (string('now()') | string('.now()')).map(
+  (_) => NowParser(),
+);
 
 /// identifies timeOfDays
 final Parser<TimeOfDayParser> timeOfDayLexer =
-    (string('timeOfDay()') | string('.timeOfDay()'))
-        .map((_) => TimeOfDayParser());
+    (string('timeOfDay()') | string('.timeOfDay()')).map(
+      (_) => TimeOfDayParser(),
+    );
 
 /// identifies todays
-final Parser<TodayParser> todayLexer =
-    (string('today()') | string('.today()')).map((_) => TodayParser());
+final Parser<TodayParser> todayLexer = (string('today()') | string('.today()'))
+    .map((_) => TodayParser());

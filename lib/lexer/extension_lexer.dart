@@ -5,20 +5,24 @@ import 'package:petitparser/petitparser.dart';
 import '../fhir_path.dart';
 
 /// identifies sums
-final Parser<SumParser> sumLexer =
-    (string('sum()') | string('.sum()')).map((_) => SumParser());
+final Parser<SumParser> sumLexer = (string('sum()') | string('.sum()')).map(
+  (_) => SumParser(),
+);
 
 /// identifies mins
-final Parser<MinParser> minLexer =
-    (string('min()') | string('.min()')).map((_) => MinParser());
+final Parser<MinParser> minLexer = (string('min()') | string('.min()')).map(
+  (_) => MinParser(),
+);
 
 /// identifies maxs
-final Parser<MaxParser> maxLexer =
-    (string('max()') | string('.max()')).map((_) => MaxParser());
+final Parser<MaxParser> maxLexer = (string('max()') | string('.max()')).map(
+  (_) => MaxParser(),
+);
 
 /// identifies avgs
-final Parser<AvgParser> avgLexer =
-    (string('avg()') | string('.avg()')).map((_) => AvgParser());
+final Parser<AvgParser> avgLexer = (string('avg()') | string('.avg()')).map(
+  (_) => AvgParser(),
+);
 
 /// identifies answerss
 final Parser<AnswersParser> answersLexer =

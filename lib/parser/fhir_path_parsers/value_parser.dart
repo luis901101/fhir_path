@@ -36,7 +36,8 @@ class ParenthesesParser extends ValueParser<ParserList> {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}(\n'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}(\n'
       '${value.verbosePrint(indent + 1)}\n'
       '${"  " * indent})';
 
@@ -45,7 +46,8 @@ class ParenthesesParser extends ValueParser<ParserList> {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => '(\n'
+  String prettyPrint([int indent = 2]) =>
+      '(\n'
       '${"  " * indent}${value.prettyPrint(indent + 1)}\n'
       '${indent <= 0 ? "" : "  " * (indent - 1)})';
 }

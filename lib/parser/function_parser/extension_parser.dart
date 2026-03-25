@@ -13,16 +13,19 @@ class SumParser extends FhirPathParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) => [
-        results
-            .map((e) => e is num
-                ? e
-                : throw FhirPathEvaluationException(
-                    'sum() can only add numbers.',
-                    operation: 'sum',
-                    arguments: e,
-                    collection: results))
-            .sum
-      ];
+    results
+        .map(
+          (e) => e is num
+              ? e
+              : throw FhirPathEvaluationException(
+                  'sum() can only add numbers.',
+                  operation: 'sum',
+                  arguments: e,
+                  collection: results,
+                ),
+        )
+        .sum,
+  ];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -49,16 +52,19 @@ class MinParser extends FhirPathParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) => [
-        results
-            .map((e) => e is num
-                ? e
-                : throw FhirPathEvaluationException(
-                    'min() can only operate on numbers.',
-                    operation: 'min',
-                    arguments: e,
-                    collection: results))
-            .min
-      ];
+    results
+        .map(
+          (e) => e is num
+              ? e
+              : throw FhirPathEvaluationException(
+                  'min() can only operate on numbers.',
+                  operation: 'min',
+                  arguments: e,
+                  collection: results,
+                ),
+        )
+        .min,
+  ];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -85,16 +91,19 @@ class MaxParser extends FhirPathParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) => [
-        results
-            .map((e) => e is num
-                ? e
-                : throw FhirPathEvaluationException(
-                    'max() can only operate on numbers.',
-                    operation: 'max',
-                    arguments: e,
-                    collection: results))
-            .max
-      ];
+    results
+        .map(
+          (e) => e is num
+              ? e
+              : throw FhirPathEvaluationException(
+                  'max() can only operate on numbers.',
+                  operation: 'max',
+                  arguments: e,
+                  collection: results,
+                ),
+        )
+        .max,
+  ];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -121,16 +130,19 @@ class AvgParser extends FhirPathParser {
   /// expression one object at a time
   @override
   List execute(List results, Map<String, dynamic> passed) => [
-        results
-            .map((e) => e is num
-                ? e
-                : throw FhirPathEvaluationException(
-                    'avg() can only operate on numbers.',
-                    operation: 'avg',
-                    arguments: e,
-                    collection: results))
-            .average
-      ];
+    results
+        .map(
+          (e) => e is num
+              ? e
+              : throw FhirPathEvaluationException(
+                  'avg() can only operate on numbers.',
+                  operation: 'avg',
+                  arguments: e,
+                  collection: results,
+                ),
+        )
+        .average,
+  ];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -158,8 +170,10 @@ class AnswersParser extends FhirPathParser {
   @override
   List execute(List results, Map<String, dynamic> passed) {
     final descendants = DescendantsParser().execute(results, passed);
-    final answerMaps = descendants.where((element) =>
-        (element is Map<String, dynamic>) && element.containsKey('answer'));
+    final answerMaps = descendants.where(
+      (element) =>
+          (element is Map<String, dynamic>) && element.containsKey('answer'),
+    );
     final answers = <dynamic>[];
     answerMaps.forEach((element) {
       answers.addAll((element as Map<String, dynamic>)['answer'] as Iterable);
@@ -221,7 +235,6 @@ class OrdinalParser extends FhirPathParser {
                 }
               }
             } else
-
             /// just in case it's a Map and not a list
             if (extension is Map) {
               /// if it is defined as an ordinalValue
@@ -249,8 +262,9 @@ class OrdinalParser extends FhirPathParser {
 
       polymorphicPrefixes.forEach((element) {
         if (result['${element}Coding'] != null) {
-          newResults
-              .addAll(checkForOrdinalValues([result['${element}Coding']]));
+          newResults.addAll(
+            checkForOrdinalValues([result['${element}Coding']]),
+          );
         }
         if (result['${element}Code'] != null) {
           newResults.addAll(checkForOrdinalValues([result['${element}Code']]));

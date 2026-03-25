@@ -32,56 +32,48 @@ class IsParser extends OperatorParser {
             'passed the following\n'
             'Operand1: $executedBefore\n'
             'Operand2: $executedAfter',
-            collection: results)
+            collection: results,
+          )
         : (passed.isVersion(FhirVersion.r4)
-                    ? r4.resourceTypeFromStringMap.keys
-                        .contains(executedAfter.first)
-                    : r5.resourceTypeFromStringMap.keys
-                            .contains(executedAfter.first)) &&
-                executedBefore.first is Map &&
-                executedBefore.first['resourceType'] == executedAfter.first
-            ? [true]
-            : executedAfter.first == 'String'
-                ? [executedBefore.first is String]
-                : executedAfter.first == 'Boolean'
-                    ? [
-                        executedBefore.first is bool ||
-                            executedBefore.first is FhirBoolean
-                      ]
-                    : executedAfter.first == 'Integer'
-                        ? [
-                            (executedBefore.first is int ||
-                                    executedBefore.first is FhirInteger) &&
-
-                                /// This is because of transpilation to javascript
-                                !executedBefore.first.toString().contains('.')
-                          ]
-                        : executedAfter.first == 'Decimal'
-                            ? [
-                                (executedBefore.first is double ||
-                                        executedBefore.first is FhirDecimal) &&
-
-                                    /// This is because of transpilation to javascript
-                                    executedBefore.first
-                                        .toString()
-                                        .contains('.')
-                              ]
-                            : executedAfter.first == 'Date'
-                                ? [executedBefore.first is FhirDate]
-                                : executedAfter.first == 'DateTime'
-                                    ? [
-                                        executedBefore.first is DateTime ||
-                                            executedBefore.first is FhirDateTime
-                                      ]
-                                    : executedAfter.first == 'Time'
-                                        ? [executedBefore.first is FhirTime]
-                                        : executedAfter.first == 'Quantity'
-                                            ? [
-                                                ValidatedQuantity
-                                                    .isValidatedQuantity(
-                                                        executedBefore.first)
-                                              ]
-                                            : [false];
+                  ? r4.resourceTypeFromStringMap.keys.contains(
+                      executedAfter.first,
+                    )
+                  : r5.resourceTypeFromStringMap.keys.contains(
+                      executedAfter.first,
+                    )) &&
+              executedBefore.first is Map &&
+              executedBefore.first['resourceType'] == executedAfter.first
+        ? [true]
+        : executedAfter.first == 'String'
+        ? [executedBefore.first is String]
+        : executedAfter.first == 'Boolean'
+        ? [executedBefore.first is bool || executedBefore.first is FhirBoolean]
+        : executedAfter.first == 'Integer'
+        ? [
+            (executedBefore.first is int ||
+                    executedBefore.first is FhirInteger) &&
+                /// This is because of transpilation to javascript
+                !executedBefore.first.toString().contains('.'),
+          ]
+        : executedAfter.first == 'Decimal'
+        ? [
+            (executedBefore.first is double ||
+                    executedBefore.first is FhirDecimal) &&
+                /// This is because of transpilation to javascript
+                executedBefore.first.toString().contains('.'),
+          ]
+        : executedAfter.first == 'Date'
+        ? [executedBefore.first is FhirDate]
+        : executedAfter.first == 'DateTime'
+        ? [
+            executedBefore.first is DateTime ||
+                executedBefore.first is FhirDateTime,
+          ]
+        : executedAfter.first == 'Time'
+        ? [executedBefore.first is FhirTime]
+        : executedAfter.first == 'Quantity'
+        ? [ValidatedQuantity.isValidatedQuantity(executedBefore.first)]
+        : [false];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -92,7 +84,8 @@ class IsParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}IsParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}IsParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -101,7 +94,8 @@ class IsParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => 'is('
+  String prettyPrint([int indent = 2]) =>
+      'is('
       '\n${before.prettyPrint(indent + 1)}'
       '\n${after.prettyPrint(indent + 1)}\n'
       '${indent <= 0 ? "" : "  " * (indent - 1)})';
@@ -119,25 +113,29 @@ class AsParser extends OperatorParser {
     final executedBefore = before.execute(results.toList(), passed);
     if (executedBefore.length != 1) {
       throw FhirPathEvaluationException(
-          'The "as" operation requires a left operand with 1 item, '
-          'but was passed the following\n'
-          'Operand 1: $before',
-          operation: 'as',
-          arguments: before,
-          collection: results);
+        'The "as" operation requires a left operand with 1 item, '
+        'but was passed the following\n'
+        'Operand 1: $before',
+        operation: 'as',
+        arguments: before,
+        collection: results,
+      );
     } else if (after.length != 1 || after.first is! IdentifierParser) {
       throw FhirPathEvaluationException(
-          'The "as" operation requires a right operand that '
-          'has a single item that resolves to an identifier, but was passed:\n'
-          'Operand 2: $after',
-          operation: 'as',
-          arguments: after,
-          collection: results);
+        'The "as" operation requires a right operand that '
+        'has a single item that resolves to an identifier, but was passed:\n'
+        'Operand 2: $after',
+        operation: 'as',
+        arguments: after,
+        collection: results,
+      );
     }
     final identifierValue = (after.first as IdentifierParser).value;
     if (((passed.isVersion(FhirVersion.r4)
                 ? r4.resourceTypeFromStringMap.keys.contains(identifierValue)
-                : r5.resourceTypeFromStringMap.keys.contains(identifierValue)) &&
+                : r5.resourceTypeFromStringMap.keys.contains(
+                    identifierValue,
+                  )) &&
             executedBefore.first is Map &&
             executedBefore.first['resourceType'] == identifierValue) ||
         (identifierValue.toLowerCase() == 'string' &&
@@ -180,7 +178,8 @@ class AsParser extends OperatorParser {
   /// at all as objects in the official spec. I'm generally going to recommend
   /// that you use [prettyPrint] instead
   @override
-  String verbosePrint(int indent) => '${"  " * indent}AsParser'
+  String verbosePrint(int indent) =>
+      '${"  " * indent}AsParser'
       '\n${before.verbosePrint(indent + 1)}'
       '\n${after.verbosePrint(indent + 1)}';
 
@@ -189,7 +188,8 @@ class AsParser extends OperatorParser {
   /// [verbosePrint], while still demonstrating how the expression was parsed
   /// and nested according to this package
   @override
-  String prettyPrint([int indent = 2]) => 'as'
+  String prettyPrint([int indent = 2]) =>
+      'as'
       '\n${"  " * indent}${before.prettyPrint(indent + 1)}'
       '\n${"  " * indent}${after.prettyPrint(indent + 1)}';
 }

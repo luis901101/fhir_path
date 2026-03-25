@@ -5,7 +5,8 @@ import 'package:petitparser/petitparser.dart';
 import '../fhir_path.dart';
 
 /// Lexers for identifying special items
-final specialLexer = bracketsIndexLexer |
+final specialLexer =
+    bracketsIndexLexer |
     indexLexer |
     thisLexer |
     totalLexer |
@@ -13,7 +14,8 @@ final specialLexer = bracketsIndexLexer |
     dotLexer;
 
 /// Lexers for identifying key words
-final wordOperationLexer = impliesLexer |
+final wordOperationLexer =
+    impliesLexer |
     orStringLexer |
     xorLexer |
     andStringLexer |
@@ -25,7 +27,8 @@ final wordOperationLexer = impliesLexer |
     divStringLexer;
 
 /// Lexers for identifying key symbols
-final symbolOperationLexer = notEquivalentLexer |
+final symbolOperationLexer =
+    notEquivalentLexer |
     notEqualsLexer |
     equivalentLexer |
     equalsLexer |
@@ -42,7 +45,8 @@ final symbolOperationLexer = notEquivalentLexer |
     commaLexer;
 
 /// All lexers for functions that accept arguments
-final functionLexer = unionFunctionLexer |
+final functionLexer =
+    unionFunctionLexer |
     combineLexer |
     toQuantityLexer |
     convertsToQuantityLexer |
@@ -79,7 +83,8 @@ final functionLexer = unionFunctionLexer |
 final wsLexer = WS | COMMENT | LINE_COMMENT;
 
 /// Lexers identifying special formatting of certain types of data
-final literalLexer = quantityLiteral |
+final literalLexer =
+    quantityLiteral |
     STRING |
     envVariableLexer |
     DELIMITEDIDENTIFIER |
@@ -92,7 +97,8 @@ final literalLexer = quantityLiteral |
     TIME;
 
 /// All lexers for functions that don't accept arguments
-final simpleLexer = toBooleanLexer |
+final simpleLexer =
+    toBooleanLexer |
     convertsToBooleanLexer |
     toIntegerLexer |
     convertsToIntegerLexer |

@@ -19,16 +19,12 @@ class IndexOfParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.indexOf()', results)
-            : executedValue.first is! String
-                ? throw _requiresString('.indexOf()', results)
-                : results.first.toString() == ''
-                    ? []
-                    : [
-                        results.first
-                            .toString()
-                            .indexOf(executedValue.first as String)
-                      ];
+        ? throw _requiresList('.indexOf()', results)
+        : executedValue.first is! String
+        ? throw _requiresString('.indexOf()', results)
+        : results.first.toString() == ''
+        ? []
+        : [results.first.toString().indexOf(executedValue.first as String)];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -67,41 +63,37 @@ class SubstringParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.substring()', results)
-            : (results.first is! String)
-                ? throw _requiresString('.substring()', results)
-                : executedValue.isNotEmpty &&
-                        executedValue.first is int &&
-                        (((executedValue.first as int) >=
-                                (results.first as String).length) ||
-                            (executedValue.first as int) < 0)
-                    ? []
-                    : executedValue.length == 1 && executedValue.first is int
-                        ? [
-                            results.first
-                                .toString()
-                                .substring(executedValue.first as int)
-                          ]
-                        : executedValue.length == 2 &&
-                                executedValue.first is int &&
-                                executedValue.last is int
-                            ? [
-                                results.first.toString().substring(
-                                      executedValue.first as int,
-                                      ((executedValue.first as int) +
-                                                  (executedValue.last as int)) >
-                                              results.first.toString().length
-                                          ? results.first.toString().length
-                                          : ((executedValue.first as int) +
-                                              (executedValue.last as int)),
-                                    )
-                              ]
-                            : throw FhirPathEvaluationException(
-                                'The function .substring() was not provided the '
-                                ' proper parameters.',
-                                operation: '.substring()',
-                                collection: results,
-                                arguments: executedValue);
+        ? throw _requiresList('.substring()', results)
+        : (results.first is! String)
+        ? throw _requiresString('.substring()', results)
+        : executedValue.isNotEmpty &&
+              executedValue.first is int &&
+              (((executedValue.first as int) >=
+                      (results.first as String).length) ||
+                  (executedValue.first as int) < 0)
+        ? []
+        : executedValue.length == 1 && executedValue.first is int
+        ? [results.first.toString().substring(executedValue.first as int)]
+        : executedValue.length == 2 &&
+              executedValue.first is int &&
+              executedValue.last is int
+        ? [
+            results.first.toString().substring(
+              executedValue.first as int,
+              ((executedValue.first as int) + (executedValue.last as int)) >
+                      results.first.toString().length
+                  ? results.first.toString().length
+                  : ((executedValue.first as int) +
+                        (executedValue.last as int)),
+            ),
+          ]
+        : throw FhirPathEvaluationException(
+            'The function .substring() was not provided the '
+            ' proper parameters.',
+            operation: '.substring()',
+            collection: results,
+            arguments: executedValue,
+          );
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -140,16 +132,12 @@ class StartsWithParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.startsWith()', results)
-            : executedValue.first is! String
-                ? throw _requiresString('.startsWith()', results)
-                : results.first.toString() == ''
-                    ? [true]
-                    : [
-                        results.first
-                            .toString()
-                            .startsWith(executedValue.first as String)
-                      ];
+        ? throw _requiresList('.startsWith()', results)
+        : executedValue.first is! String
+        ? throw _requiresString('.startsWith()', results)
+        : results.first.toString() == ''
+        ? [true]
+        : [results.first.toString().startsWith(executedValue.first as String)];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -188,16 +176,12 @@ class EndsWithParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.endsWith()', results)
-            : executedValue.first is! String
-                ? throw _requiresString('.endsWith()', results)
-                : results.first.toString() == ''
-                    ? [true]
-                    : [
-                        results.first
-                            .toString()
-                            .endsWith(executedValue.first as String)
-                      ];
+        ? throw _requiresList('.endsWith()', results)
+        : executedValue.first is! String
+        ? throw _requiresString('.endsWith()', results)
+        : results.first.toString() == ''
+        ? [true]
+        : [results.first.toString().endsWith(executedValue.first as String)];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -238,9 +222,11 @@ class ContainsFunctionParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results
-            .map((e) =>
-                e is String && e.contains(executedValue.first.toString()))
-            .toList();
+              .map(
+                (e) =>
+                    e is String && e.contains(executedValue.first.toString()),
+              )
+              .toList();
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -273,8 +259,8 @@ class UpperParser extends FhirPathParser {
   List execute(List results, Map<String, dynamic> passed) => results.isEmpty
       ? []
       : results.length > 1
-          ? throw _requiresList('.upper()', results)
-          : [results.first.toString().toUpperCase()];
+      ? throw _requiresList('.upper()', results)
+      : [results.first.toString().toUpperCase()];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -303,8 +289,8 @@ class LowerParser extends FhirPathParser {
   List execute(List results, Map<String, dynamic> passed) => results.isEmpty
       ? []
       : results.length > 1
-          ? throw _requiresList('.lower()', results)
-          : [results.first.toString().toLowerCase()];
+      ? throw _requiresList('.lower()', results)
+      : [results.first.toString().toLowerCase()];
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -339,14 +325,15 @@ class ReplaceParser extends FunctionParser {
     return results.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.replace()', results)
-            : executedValue.first is! String || executedValue.last is! String
-                ? throw _requiresString('.replace()', results)
-                : [
-                    results.first.toString().replaceAll(
-                        executedValue.first as String,
-                        executedValue.last as String)
-                  ];
+        ? throw _requiresList('.replace()', results)
+        : executedValue.first is! String || executedValue.last is! String
+        ? throw _requiresString('.replace()', results)
+        : [
+            results.first.toString().replaceAll(
+              executedValue.first as String,
+              executedValue.last as String,
+            ),
+          ];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -367,7 +354,7 @@ class ReplaceParser extends FunctionParser {
   String prettyPrint([int indent = 2]) => value.isEmpty
       ? '.replace()'
       : '.replace(\n${"  " * indent}${value.prettyPrint(indent + 1)}\n'
-          '${indent <= 0 ? "" : "  " * (indent - 1)})';
+            '${indent <= 0 ? "" : "  " * (indent - 1)})';
 }
 
 class FpMatchesParser extends FunctionParser {
@@ -385,13 +372,14 @@ class FpMatchesParser extends FunctionParser {
     return results.isEmpty || value.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.matches()', results)
-            : executedValue.first is! String
-                ? throw _requiresString('.matches()', results)
-                : [
-                    RegExp(executedValue.first as String)
-                        .hasMatch(results.first.toString())
-                  ];
+        ? throw _requiresList('.matches()', results)
+        : executedValue.first is! String
+        ? throw _requiresString('.matches()', results)
+        : [
+            RegExp(
+              executedValue.first as String,
+            ).hasMatch(results.first.toString()),
+          ];
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -431,21 +419,23 @@ class ReplaceMatchesParser extends FunctionParser {
     return results.isEmpty || value.isEmpty
         ? []
         : results.length > 1
-            ? throw _requiresList('.replace()', results)
-            : value.length == 3 &&
-                    value.first is StringParser &&
-                    value.last is StringParser
-                ? [
-                    results.first.toString().replaceAll(
-                        RegExp('${executedValue.first}'),
-                        '${executedValue.last}')
-                  ]
-                : throw FhirPathEvaluationException(
-                    'The function .replace() was not provided the '
-                    ' proper parameters.',
-                    operation: '.replace()',
-                    collection: results,
-                    arguments: value);
+        ? throw _requiresList('.replace()', results)
+        : value.length == 3 &&
+              value.first is StringParser &&
+              value.last is StringParser
+        ? [
+            results.first.toString().replaceAll(
+              RegExp('${executedValue.first}'),
+              '${executedValue.last}',
+            ),
+          ]
+        : throw FhirPathEvaluationException(
+            'The function .replace() was not provided the '
+            ' proper parameters.',
+            operation: '.replace()',
+            collection: results,
+            arguments: value,
+          );
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -478,10 +468,10 @@ class LengthParser extends FhirPathParser {
   List execute(List results, Map<String, dynamic> passed) => results.isEmpty
       ? []
       : results.length > 1
-          ? throw _requiresList('.length()', results)
-          : results.first is String
-              ? [(results.first as String).length]
-              : throw _requiresString('.length()', results);
+      ? throw _requiresList('.length()', results)
+      : results.first is String
+      ? [(results.first as String).length]
+      : throw _requiresString('.length()', results);
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -510,10 +500,10 @@ class ToCharsParser extends FhirPathParser {
   List execute(List results, Map<String, dynamic> passed) => results.isEmpty
       ? []
       : results.length > 1
-          ? throw _requiresList('.toChars()', results)
-          : results.first is String
-              ? (results.first as String).split('')
-              : throw _requiresString('.toChar()', results);
+      ? throw _requiresList('.toChars()', results)
+      : results.first is String
+      ? (results.first as String).split('')
+      : throw _requiresString('.toChar()', results);
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in

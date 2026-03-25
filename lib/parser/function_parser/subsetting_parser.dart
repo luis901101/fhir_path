@@ -15,12 +15,13 @@ class SingleParser extends FhirPathParser {
   List execute(List results, Map<String, dynamic> passed) => results.length == 1
       ? results
       : results.isEmpty
-          ? []
-          : throw FhirPathEvaluationException(
-              'The List $results is only allowed to contain one '
-              'item if evaluated using the .single() function',
-              operation: '.single()',
-              collection: results);
+      ? []
+      : throw FhirPathEvaluationException(
+          'The List $results is only allowed to contain one '
+          'item if evaluated using the .single() function',
+          operation: '.single()',
+          collection: results,
+        );
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
   /// of the Parsers that are used in this package by the names used in
@@ -143,18 +144,19 @@ class FpSkipParser extends FunctionParser {
         ? throw FhirPathEvaluationException(
             'The argument passed to the .skip() function was not valid.',
             operation: '.skip()',
-            arguments: value)
+            arguments: value,
+          )
         : executedValue.first == null
-            ? throw FhirPathEvaluationException(
-                'The value for .skip() was not a number: ${executedValue.first}',
-                operation: '.skip()',
-                arguments: executedValue.first)
-            : (executedValue.first as int) <= 0
-                ? results
-                : results.isEmpty ||
-                        (executedValue.first as int) >= results.length
-                    ? []
-                    : results.sublist(executedValue.first as int);
+        ? throw FhirPathEvaluationException(
+            'The value for .skip() was not a number: ${executedValue.first}',
+            operation: '.skip()',
+            arguments: executedValue.first,
+          )
+        : (executedValue.first as int) <= 0
+        ? results
+        : results.isEmpty || (executedValue.first as int) >= results.length
+        ? []
+        : results.sublist(executedValue.first as int);
   }
 
   /// To print the entire parsed FHIRPath expression, this includes ALL
@@ -194,17 +196,19 @@ class TakeParser extends FunctionParser {
         ? throw FhirPathEvaluationException(
             'The argument passed to the .take() function was not valid:',
             operation: '.take()',
-            arguments: value)
+            arguments: value,
+          )
         : executedValue.first is! int
-            ? throw FhirPathEvaluationException(
-                'The value for .take() was not a number: $value',
-                operation: '.take()',
-                arguments: value)
-            : (executedValue.first as int) <= 0 || results.isEmpty
-                ? []
-                : (executedValue.first as int) >= results.length
-                    ? results
-                    : results.sublist(0, executedValue.first as int);
+        ? throw FhirPathEvaluationException(
+            'The value for .take() was not a number: $value',
+            operation: '.take()',
+            arguments: value,
+          )
+        : (executedValue.first as int) <= 0 || results.isEmpty
+        ? []
+        : (executedValue.first as int) >= results.length
+        ? results
+        : results.sublist(0, executedValue.first as int);
     return newResults;
   }
 
@@ -246,18 +250,23 @@ class IntersectParser extends FunctionParser {
     // Eliminate duplicates in input
     final outBag = [];
     for (final item in inBag) {
-      if (outBag.indexWhere((otherItem) =>
-              const DeepCollectionEquality().equals(item, otherItem)) ==
+      if (outBag.indexWhere(
+            (otherItem) =>
+                const DeepCollectionEquality().equals(item, otherItem),
+          ) ==
           -1) {
         outBag.add(item);
       }
     }
 
     // Intersect
-    outBag.removeWhere((e) =>
-        other.indexWhere(
-            (element) => const DeepCollectionEquality().equals(e, element)) ==
-        -1);
+    outBag.removeWhere(
+      (e) =>
+          other.indexWhere(
+            (element) => const DeepCollectionEquality().equals(e, element),
+          ) ==
+          -1,
+    );
 
     return outBag;
   }
@@ -295,10 +304,13 @@ class ExcludeParser extends FunctionParser {
   @override
   List execute(List results, Map<String, dynamic> passed) {
     final executedValue = value.execute(results.toList(), passed);
-    results.removeWhere((e) =>
-        executedValue.indexWhere(
-            (element) => const DeepCollectionEquality().equals(e, element)) !=
-        -1);
+    results.removeWhere(
+      (e) =>
+          executedValue.indexWhere(
+            (element) => const DeepCollectionEquality().equals(e, element),
+          ) !=
+          -1,
+    );
     return results;
   }
 

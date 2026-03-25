@@ -44,7 +44,7 @@ class UnionFunctionParser extends FunctionParser {
   String prettyPrint([int indent = 2]) => value.isEmpty
       ? '.union()'
       : '.union(\n${"  " * indent}${value.prettyPrint(indent + 1)}\n'
-          '${indent <= 0 ? "" : "  " * (indent - 1)})';
+            '${indent <= 0 ? "" : "  " * (indent - 1)})';
 }
 
 /// Merge the input and other collections into a single collection
@@ -90,5 +90,5 @@ class CombineParser extends FunctionParser {
   String prettyPrint([int indent = 2]) => value.isEmpty
       ? '.combine()'
       : '.combine(\n${"  " * indent}${value.prettyPrint(indent + 1)}\n'
-          '${indent <= 0 ? "" : "  " * (indent - 1)})';
+            '${indent <= 0 ? "" : "  " * (indent - 1)})';
 }

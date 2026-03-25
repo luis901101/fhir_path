@@ -1,7 +1,4 @@
-enum FhirVersion {
-  r4,
-  r5,
-}
+enum FhirVersion { r4, r5 }
 
 extension FhirPathVersionExtension on Map<String, dynamic> {
   static const versionKey = '_version';

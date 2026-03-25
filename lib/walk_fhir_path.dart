@@ -98,8 +98,9 @@ ParserList parseFhirPath(String pathExpression) {
               final String functionName =
                   (ast.value[i] as IdentifierParser).value;
               throw FhirPathInvalidExpressionException(
-                  'Unknown function: $functionName',
-                  pathExpression: pathExpression);
+                'Unknown function: $functionName',
+                pathExpression: pathExpression,
+              );
             }
           }
         }
@@ -108,8 +109,9 @@ ParserList parseFhirPath(String pathExpression) {
       }
     } else {
       throw FhirPathInvalidExpressionException(
-          'Parsing did not result in ParserList',
-          pathExpression: pathExpression);
+        'Parsing did not result in ParserList',
+        pathExpression: pathExpression,
+      );
     }
   } catch (error) {
     if (error is ParserException) {

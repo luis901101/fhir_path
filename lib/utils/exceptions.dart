@@ -32,21 +32,20 @@ class FhirPathException implements Exception {
   /// Environment which was present
   final Map? environment;
 
-  FhirPathException(this.message,
-      {this.pathExpression,
-      this.offset,
-      this.token,
-      this.cause,
-      this.operation,
-      this.arguments,
-      this.collection,
-      this.context,
-      this.environment});
+  FhirPathException(
+    this.message, {
+    this.pathExpression,
+    this.offset,
+    this.token,
+    this.cause,
+    this.operation,
+    this.arguments,
+    this.collection,
+    this.context,
+    this.environment,
+  });
 
-  FhirPathException copyWith({
-    Object? context,
-    Map? variables,
-  }) {
+  FhirPathException copyWith({Object? context, Map? variables}) {
     return FhirPathException(
       message,
       pathExpression: pathExpression,
@@ -126,12 +125,12 @@ class FhirPathInvalidExpressionException extends FhirPathException {
     String? token,
     Object? cause,
   }) : super(
-          message,
-          pathExpression: pathExpression,
-          offset: offset,
-          token: token,
-          cause: cause,
-        );
+         message,
+         pathExpression: pathExpression,
+         offset: offset,
+         token: token,
+         cause: cause,
+       );
 }
 
 /// The FHIRPath expression is using elements that have been deprecated.
@@ -143,12 +142,12 @@ class FhirPathDeprecatedExpressionException extends FhirPathException {
     String? token,
     Object? cause,
   }) : super(
-          message,
-          pathExpression: pathExpression,
-          offset: offset,
-          token: token,
-          cause: cause,
-        );
+         message,
+         pathExpression: pathExpression,
+         offset: offset,
+         token: token,
+         cause: cause,
+       );
 }
 
 /// The evaluation of the expression failed with the given parameters.
@@ -162,12 +161,12 @@ class FhirPathEvaluationException extends FhirPathException {
     List<dynamic>? collection,
     Map? variables,
   }) : super(
-          message,
-          pathExpression: pathExpression,
-          operation: operation,
-          arguments: arguments,
-          collection: collection,
-          cause: cause,
-          environment: variables,
-        );
+         message,
+         pathExpression: pathExpression,
+         operation: operation,
+         arguments: arguments,
+         collection: collection,
+         cause: cause,
+         environment: variables,
+       );
 }
