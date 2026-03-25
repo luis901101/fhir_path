@@ -1,17 +1,23 @@
-# FHIRPath
+# FHIR Path Plus
+
+FHIR® is the registered trademark of HL7 and is used with the permission of HL7. Use of the FHIR trademark does not constitute endorsement of this product by HL7.
 
 - Checkout [this page](https://hl7.org/fhirpath/) from HL7 for the full specification
 - Please note that most of the comments on the parser classes are taken directly from HL7's
-FHIRPath specification with full credit given. I thought it would be helpful to have it as a comment while trying to use this package, so I've included it. If this is not allowed, please alert me, and
-I will immediately remove the comments.
+  FHIRPath specification with full credit given. I thought it would be helpful to have it as a comment while trying to use this package, so I've included it. If this is not allowed, please alert me, and
+  I will immediately remove the comments.
 
-## Functionality
+# Important
+- **This package is a fork of [fhir_path](https://pub.dev/packages/fhir_path) that I plan to continue to maintain. Thanks to [fhirfli.dev](https://fhirfli.dev) and all the contributors, for their work on this package.**
+- **I recommend you to check all the FHIR packages already supported by [fhirfli.dev](https://pub.dev/publishers/fhirfli.dev/packages) before using this package.**
 
-- [Basic Types](fhir_path/test/test_basic_types.dart)
-- [Path selection](fhir_path/test/test_paths.dart)
-- [Basic Operators](fhir_path/test/test_basic_operators.dart)
-- [Functions without arguments](fhir_path/test/test_no_arg_fxns.dart)
-- [Functions with arguments](fhir_path/test/test_arg_fxns.dart)
+# Functionality
+
+- [Basic Types](fhir_path_plus/test/test_basic_types.dart)
+- [Path selection](fhir_path_plus/test/test_paths.dart)
+- [Basic Operators](fhir_path_plus/test/test_basic_operators.dart)
+- [Functions without arguments](fhir_path_plus/test/test_no_arg_fxns.dart)
+- [Functions with arguments](fhir_path_plus/test/test_arg_fxns.dart)
 
 ## How To Use
 
@@ -19,20 +25,20 @@ I will immediately remove the comments.
 
 ```dart
 List r4WalkFhirPath(
-  r4.Resource? resource,
-  String pathExpression, [
-  Map<String, dynamic>? passed,
-]) =>
+    r4.Resource? resource,
+    String pathExpression, [
+      Map<String, dynamic>? passed,
+    ]) =>
     walkFhirPath(resource?.toJson(), pathExpression, passed, FhirVersion.r4);
 
 /// OR
 
 List walkFhirPath(
-  Map<String, dynamic>? resource,
-  String pathExpression, [
-  Map<String, dynamic>? passed,
-  FhirVersion version = FhirVersion.r4,
-]) {
+    Map<String, dynamic>? resource,
+    String pathExpression, [
+      Map<String, dynamic>? passed,
+      FhirVersion version = FhirVersion.r4,
+    ]) {
 ```
 
 This allows you to call the ```walkFhirPath``` function directly and pass it the FHIR version you are using, or you can call the function specifically for your version and it will pass that with it. This way the library can easily work with all versions of FHIR.
@@ -41,8 +47,8 @@ The resource is the main resource you're acting on (if you call walkFhirPath dir
 
 ```dart
 {
-    '%pi': 3.1415,
-    '%birthday': '1776/07/04'
+'%pi': 3.1415,
+'%birthday': '1776/07/04'
 }
 ```
 

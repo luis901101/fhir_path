@@ -1,11 +1,9 @@
 // ignore_for_file: annotate_overrides, overridden_fields, avoid_dynamic_calls
 
 // Package imports:
-import 'package:fhir/dstu2.dart' as dstu2;
-import 'package:fhir/primitive_types/primitive_types.dart';
-import 'package:fhir/r4.dart' as r4;
-import 'package:fhir/r5.dart' as r5;
-import 'package:fhir/stu3.dart' as stu3;
+import 'package:fhir_plus/primitive_types/primitive_types.dart';
+import 'package:fhir_plus/r4.dart' as r4;
+import 'package:fhir_plus/r5.dart' as r5;
 import 'package:ucum/ucum.dart';
 
 // Project imports:
@@ -38,14 +36,8 @@ class IsParser extends OperatorParser {
         : (passed.isVersion(FhirVersion.r4)
                     ? r4.resourceTypeFromStringMap.keys
                         .contains(executedAfter.first)
-                    : passed.isVersion(FhirVersion.r5)
-                        ? r5.resourceTypeFromStringMap.keys
-                            .contains(executedAfter.first)
-                        : passed.isVersion(FhirVersion.dstu2)
-                            ? dstu2.resourceTypeFromStringMap.keys
-                                .contains(executedAfter.first)
-                            : stu3.resourceTypeFromStringMap.keys
-                                .contains(executedAfter.first)) &&
+                    : r5.resourceTypeFromStringMap.keys
+                            .contains(executedAfter.first)) &&
                 executedBefore.first is Map &&
                 executedBefore.first['resourceType'] == executedAfter.first
             ? [true]
@@ -145,14 +137,7 @@ class AsParser extends OperatorParser {
     final identifierValue = (after.first as IdentifierParser).value;
     if (((passed.isVersion(FhirVersion.r4)
                 ? r4.resourceTypeFromStringMap.keys.contains(identifierValue)
-                : passed.isVersion(FhirVersion.r5)
-                    ? r5.resourceTypeFromStringMap.keys
-                        .contains(identifierValue)
-                    : passed.isVersion(FhirVersion.dstu2)
-                        ? dstu2.resourceTypeFromStringMap.keys
-                            .contains(identifierValue)
-                        : stu3.resourceTypeFromStringMap.keys
-                            .contains(identifierValue)) &&
+                : r5.resourceTypeFromStringMap.keys.contains(identifierValue)) &&
             executedBefore.first is Map &&
             executedBefore.first['resourceType'] == identifierValue) ||
         (identifierValue.toLowerCase() == 'string' &&

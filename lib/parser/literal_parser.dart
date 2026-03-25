@@ -1,11 +1,9 @@
 // ignore_for_file: annotate_overrides, overridden_fields, avoid_dynamic_calls, avoid_bool_literals_in_conditional_expressions
 
 import 'package:collection/collection.dart';
-import 'package:fhir/dstu2.dart' as dstu2;
-import 'package:fhir/primitive_types/primitive_types.dart';
-import 'package:fhir/r4.dart' as r4;
-import 'package:fhir/r5.dart' as r5;
-import 'package:fhir/stu3.dart' as stu3;
+import 'package:fhir_plus/primitive_types/primitive_types.dart';
+import 'package:fhir_plus/r4.dart' as r4;
+import 'package:fhir_plus/r5.dart' as r5;
 import 'package:ucum/ucum.dart';
 
 // Project imports:
@@ -252,12 +250,7 @@ class IdentifierParser extends ValueParser<String> {
 
     if (passed.isVersion(FhirVersion.r4)
         ? r4.resourceTypeFromStringMap.keys.contains(identifierName)
-        : passed.isVersion(FhirVersion.r5)
-            ? r5.resourceTypeFromStringMap.keys.contains(identifierName)
-            : passed.isVersion(FhirVersion.dstu2)
-                ? dstu2.resourceTypeFromStringMap.keys.contains(identifierName)
-                : stu3.resourceTypeFromStringMap.keys
-                    .contains(identifierName)) {
+        : r5.resourceTypeFromStringMap.keys.contains(identifierName)) {
       if (!passed.hasNoContext &&
           passed.context?['resourceType'] == identifierName) {
         finalResults.add(passed.context);
@@ -357,12 +350,7 @@ class DelimitedIdentifierParser extends ValueParser<String> {
 
     if (passed.isVersion(FhirVersion.r4)
         ? r4.resourceTypeFromStringMap.keys.contains(identifierName)
-        : passed.isVersion(FhirVersion.r5)
-            ? r5.resourceTypeFromStringMap.keys.contains(identifierName)
-            : passed.isVersion(FhirVersion.dstu2)
-                ? dstu2.resourceTypeFromStringMap.keys.contains(identifierName)
-                : stu3.resourceTypeFromStringMap.keys
-                        .contains(identifierName) &&
+        : r5.resourceTypeFromStringMap.keys.contains(identifierName) &&
                     (passed.hasNoContext
                         ? false
                         : passed.context?['resourceType'] == identifierName)) {

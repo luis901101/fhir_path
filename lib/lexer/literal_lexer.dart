@@ -4,7 +4,7 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:fhir/primitive_types/primitive_types.dart';
+import 'package:fhir_plus/primitive_types/primitive_types.dart';
 import 'package:petitparser/petitparser.dart';
 import 'package:ucum/ucum.dart';
 

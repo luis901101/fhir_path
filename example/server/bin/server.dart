@@ -26,6 +26,7 @@ Future main() async {
     port,
   );
 
+  // ignore: avoid_print
   print('Serving at http://${server.address.host}:${server.port}');
 }
 

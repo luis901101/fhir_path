@@ -1,8 +1,6 @@
 // Package imports:
-import 'package:fhir/dstu2.dart' as dstu2;
-import 'package:fhir/r4.dart' as r4;
-import 'package:fhir/r5.dart' as r5;
-import 'package:fhir/stu3.dart' as stu3;
+import 'package:fhir_plus/r4.dart' as r4;
+import 'package:fhir_plus/r5.dart' as r5;
 import 'package:petitparser/core.dart';
 
 // Project imports:
@@ -211,34 +209,6 @@ List<dynamic> r5WalkFhirPath(
     pathExpression: pathExpression,
     environment: environment,
     version: FhirVersion.r5,
-  );
-}
-
-List<dynamic> dstu2WalkFhirPath(
-  dstu2.Resource? resource,
-  String pathExpression, [
-  Map<String, dynamic>? environment,
-]) {
-  final resourceJson = resource?.toJson();
-  return walkFhirPath(
-    context: resourceJson,
-    pathExpression: pathExpression,
-    environment: environment,
-    version: FhirVersion.dstu2,
-  );
-}
-
-List<dynamic> stu3WalkFhirPath(
-  stu3.Resource? resource,
-  String pathExpression, [
-  Map<String, dynamic>? environment,
-]) {
-  final resourceJson = resource?.toJson();
-  return walkFhirPath(
-    context: resourceJson,
-    pathExpression: pathExpression,
-    environment: environment,
-    version: FhirVersion.stu3,
   );
 }
 

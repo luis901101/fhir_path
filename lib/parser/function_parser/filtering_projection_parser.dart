@@ -2,11 +2,9 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
-import 'package:fhir/dstu2.dart' as dstu2;
-import 'package:fhir/primitive_types/primitive_types.dart';
-import 'package:fhir/r4.dart' as r4;
-import 'package:fhir/r5.dart' as r5;
-import 'package:fhir/stu3.dart' as stu3;
+import 'package:fhir_plus/primitive_types/primitive_types.dart';
+import 'package:fhir_plus/r4.dart' as r4;
+import 'package:fhir_plus/r5.dart' as r5;
 import 'package:ucum/ucum.dart';
 
 // Project imports:
@@ -180,17 +178,12 @@ class OfTypeParser extends FunctionParser {
     final finalResults = [];
     results.forEach((e) {
       if (((passed.isVersion(FhirVersion.r4)
-                  ? r4.resourceTypeFromStringMap.keys
-                      .contains((executedValue.first as IdentifierParser).value)
-                  : passed.isVersion(FhirVersion.r5)
-                      ? r5.resourceTypeFromStringMap.keys.contains(
-                          (executedValue.first as IdentifierParser).value)
-                      : passed.isVersion(FhirVersion.dstu2)
-                          ? dstu2.resourceTypeFromStringMap.keys.contains(
-                              (executedValue.first as IdentifierParser).value)
-                          : stu3.resourceTypeFromStringMap.keys.contains(
-                              (executedValue.first as IdentifierParser).value,
-                            )) &&
+                  ? r4.resourceTypeFromStringMap.keys.contains(
+                      (executedValue.first as IdentifierParser).value,
+                    )
+                  : r5.resourceTypeFromStringMap.keys.contains(
+                      (executedValue.first as IdentifierParser).value,
+                    )) &&
               e is Map &&
               e['resourceType'] ==
                   (executedValue.first as IdentifierParser).value) ||
@@ -265,12 +258,12 @@ class ExtensionParser extends FunctionParser {
     final urlEquals = EqualsParser();
     urlEquals.before = ParserList([IdentifierParser('', 'url')]);
     urlEquals.after = ParserList([StringParser('$extensionUrl')]);
-    final extensionUrlPredicate = ParserList([
-      urlEquals,
-    ]);
+    final extensionUrlPredicate = ParserList([urlEquals]);
     final whereParser = FpWhereParser(extensionUrlPredicate);
-    final extensionParsers =
-        ParserList([IdentifierParser('', 'extension'), whereParser]);
+    final extensionParsers = ParserList([
+      IdentifierParser('', 'extension'),
+      whereParser,
+    ]);
 
     return extensionParsers.execute(results.toList(), passed);
   }
