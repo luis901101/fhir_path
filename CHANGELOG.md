@@ -9,5 +9,12 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+# 1.1.0
+### Changed
+- Update `petitparser` and `test` dependencies
+
+### Fixed
+- Hide `StringParser` from the `petitparser` import in `literal_lexer.dart`, which failed to compile with `petitparser` 7.1.0
+
 ## 1.0.0
 - First release.

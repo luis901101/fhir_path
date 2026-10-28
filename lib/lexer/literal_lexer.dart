@@ -5,7 +5,7 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:fhir_plus/primitive_types/primitive_types.dart';
-import 'package:petitparser/petitparser.dart';
+import 'package:petitparser/petitparser.dart' hide StringParser;
 import 'package:ucum/ucum.dart';
 
 // Project imports:

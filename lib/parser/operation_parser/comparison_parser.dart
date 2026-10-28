@@ -151,7 +151,6 @@ class LessEqualParser extends OperatorParser {
 enum Comparator { gt, gte, lt, lte }
 
 // TODO(Dokotela): review if appropriately comparing different types
-@override
 List executeComparisons(
   List results,
   ParserList before,
